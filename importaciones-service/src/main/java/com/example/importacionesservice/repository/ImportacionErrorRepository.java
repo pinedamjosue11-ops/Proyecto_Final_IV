@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface ImportacionErrorRepository extends JpaRepository<ImportacionError, Long> {
-    List<ImportacionError> findByImportacionId(Long importacionId);
+    List<ImportacionError> findByImportacionIdOrderByNumeroFilaAsc(Long importacionId);
 }

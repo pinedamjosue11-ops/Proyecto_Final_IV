@@ -22,13 +22,16 @@ public class ProductoController {
         this.productoService = productoService;
     }
 
-    // 1. GET /api/v1/productos?query=...&page=0&size=10 (Consulta paginada y con filtro)
+    // GET /api/v1/productos?query=...&categoria=...&page=0&size=10
     @GetMapping
     public ResponseEntity<Page<Producto>> listar(
             @RequestParam(required = false) String query,
+            @RequestParam(required = false) String categoria,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
-        Page<Producto> productos = productoService.listarProductos(query, PageRequest.of(page, size));
+        Page<Producto> productos = productoService.listarProductos(
+                query, categoria, PageRequest.of(page, size)
+        );
         return ResponseEntity.ok(productos);
     }
 

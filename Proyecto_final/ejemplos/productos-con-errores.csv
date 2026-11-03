@@ -1,0 +1,6 @@
+codigo,nombre,categoria,precio,existencia
+EJEMPLO-002,Teclado de prueba,Perifericos,250,10
+EJEMPLO-002,Teclado duplicado,Perifericos,275,5
+EJEMPLO-003,Monitor de prueba,Categoria inexistente,800,2
+EJEMPLO-004,Producto sin precio,Perifericos,no-es-numero,3
+EJEMPLO-005,Existencia negativa,Perifericos,99,-1

@@ -5,6 +5,8 @@ import com.example.proyecto_final_iv.model.Categoria;
 import com.example.proyecto_final_iv.model.Producto;
 import com.example.proyecto_final_iv.repository.ICategoriaRepository;
 import com.example.proyecto_final_iv.repository.iProductoRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,8 @@ import java.util.Optional;
 @Service
 public class ProductoService {
 
+    private static final Logger log = LoggerFactory.getLogger(ProductoService.class);
+
     private final iProductoRepository productoRepository;
     private final ICategoriaRepository categoriaRepository;
 
@@ -27,12 +31,8 @@ public class ProductoService {
         this.categoriaRepository = categoriaRepository;
     }
 
-    // Consulta paginada con filtro opcional por nombre o código
-    public Page<Producto> listarProductos(String query, Pageable pageable) {
-        if (query != null && !query.isBlank()) {
-            return productoRepository.findByNombreContainingIgnoreCaseOrCodigoContainingIgnoreCase(query, query, pageable);
-        }
-        return productoRepository.findAll(pageable);
+    public Page<Producto> listarProductos(String query, String categoria, Pageable pageable) {
+        return productoRepository.buscar(query, categoria, pageable);
     }
 
     // Obtener un producto individual por ID
@@ -56,6 +56,13 @@ public class ProductoService {
                     item.nombre() == null || item.nombre().isBlank() ||
                     item.categoria() == null || item.categoria().isBlank()) {
                 resultados.add(new ProductoResultDto(item.numeroFila(), item.codigo(), false, "Campos obligatorios incompletos"));
+                continue;
+            }
+            if (item.codigo().length() > 50 || item.nombre().length() > 150) {
+                resultados.add(new ProductoResultDto(
+                        item.numeroFila(), item.codigo(), false,
+                        "El código debe tener hasta 50 caracteres y el nombre hasta 150"
+                ));
                 continue;
             }
 
@@ -94,6 +101,14 @@ public class ProductoService {
             resultados.add(new ProductoResultDto(item.numeroFila(), item.codigo(), true, null));
         }
 
+        long rechazados = resultados.stream().filter(resultado -> !resultado.exitoso()).count();
+        if (rechazados > 0) {
+            log.warn("Lote de catálogo procesado: {} filas, {} aceptadas y {} rechazadas",
+                    items.size(), items.size() - rechazados, rechazados);
+        } else {
+            log.info("Lote de catálogo procesado: {} filas, {} aceptadas",
+                    items.size(), items.size());
+        }
         return new LoteResultDto(resultados);
     }
 }

@@ -1,0 +1,110 @@
+:root {
+    --moss-green: #657747;
+    --forest-green: #24543b;
+    --surface: #f8f9f5;
+}
+
+body {
+    min-height: 100vh;
+    background-color: var(--moss-green);
+}
+
+.site-header {
+    background-color: var(--forest-green);
+    box-shadow: 0 2px 8px rgb(20 45 30 / 20%);
+}
+
+.site-header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    min-height: 88px;
+}
+
+.site-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.site-brand:hover {
+    color: #e2edda;
+}
+
+.site-brand__logo {
+    width: 64px;
+    height: 64px;
+    padding: 3px;
+    border: 2px solid rgb(255 255 255 / 75%);
+    border-radius: 50%;
+    background-color: #fff;
+    object-fit: cover;
+}
+
+.site-nav {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.site-nav .nav-link {
+    border-radius: 0.4rem;
+    color: #f5f7f1;
+    padding: 0.55rem 0.75rem;
+}
+
+.site-nav .nav-link:hover,
+.site-nav .nav-link:focus-visible {
+    background-color: rgb(255 255 255 / 14%);
+    color: #fff;
+}
+
+.app-main {
+    min-height: calc(100vh - 120px);
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-radius: 0.8rem;
+    background-color: var(--surface);
+}
+
+@media (max-width: 575.98px) {
+    .site-header__inner {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 0.65rem;
+        padding-top: 0.75rem;
+        padding-bottom: 0.75rem;
+    }
+
+    .site-brand {
+        font-size: 1.05rem;
+    }
+
+    .site-brand__logo {
+        width: 52px;
+        height: 52px;
+    }
+
+    .site-nav {
+        width: 100%;
+        justify-content: space-between;
+        gap: 0;
+    }
+
+    .site-nav .nav-link {
+        padding: 0.45rem 0.4rem;
+    }
+
+    .app-main {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        padding-right: 1rem;
+        padding-left: 1rem;
+    }
+}

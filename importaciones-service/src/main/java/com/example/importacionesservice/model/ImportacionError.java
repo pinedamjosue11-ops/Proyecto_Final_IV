@@ -17,7 +17,7 @@ public class ImportacionError {
     @Column(name = "numero_fila", nullable = false)
     private Integer numeroFila;
 
-    @Column(name = "datos_recibidos")
+    @Column(name = "datos_recibidos", columnDefinition = "TEXT")
     private String datosRecibidos;
 
     @Column(nullable = false)
